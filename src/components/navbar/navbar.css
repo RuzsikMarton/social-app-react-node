@@ -1,0 +1,35 @@
+@reference "../../index.css";
+
+@layer components {
+    .navbar {
+        @apply sticky top-0 bg-bg z-20 flex justify-between items-center px-2.5 h-12 border-b border-border text-text;
+
+        .left{
+            @apply flex items-center gap-8;
+
+            & span {
+                @apply font-bold text-xl text-logo
+            } 
+
+            .search {
+                @apply flex items-center gap-2.5 border border-border rounded-xl p-1;
+
+                & input{
+                    @apply hidden md:block border-none w-36 md:w-60 lg:w-96 bg-transparent
+                }
+            }
+        }
+
+        .right {
+            @apply hidden md:flex items-center gap-5;
+
+            .user {
+                @apply flex items-center gap-2.5 font-semibold;
+
+                & img {
+                    @apply w-7 h-7 object-cover rounded-full
+                }
+            }
+        }
+    }
+}

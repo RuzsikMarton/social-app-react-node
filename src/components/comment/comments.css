@@ -1,0 +1,42 @@
+@reference "../../index.css";
+
+@layer components {
+    .comments {
+
+        & img {
+            @apply w-10 h-10 rounded-full object-cover
+        }
+
+        .write {
+            @apply flex items-center justify-between gap-5 my-2.5;
+
+            & input {
+                @apply flex-5 p-2.5 border border-border bg-transparent text-text;
+            }
+            
+            & button {
+                @apply border-none cursor-pointer text-white p-2 bg-follow rounded;
+            }
+        }
+
+        .comment {
+            @apply my-7 flex justify-between gap-5;
+
+            .info {
+                @apply flex flex-col gap-1 items-start flex-5;
+
+                & span {
+                    @apply font-medium;
+                }
+
+                & p {
+                    @apply text-text-soft;
+                }
+            }
+
+            .date {
+                @apply flex-1 self-center text-xs md:text-sm;
+            }
+        }
+    }
+}

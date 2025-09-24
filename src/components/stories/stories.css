@@ -1,0 +1,23 @@
+@reference "../../index.css";
+
+@layer components {
+    .stories {
+        @apply flex justify-between h-14 gap-2.5 mb-3 p-4 md:h-44 lg:h-64 md:justify-start ;
+
+        .story{
+            @apply rounded-full w-14 h-14 md:flex-1 md:h-40 lg:h-auto md:w-auto md:rounded overflow-hidden relative;
+
+            & img {
+                @apply w-full h-full
+            }
+
+            & span {
+                @apply hidden md:flex absolute bottom-2.5 left-2.5 text-white font-medium
+            }
+
+            & button {
+                @apply absolute inset-0 m-auto md:m-0 md:inset-auto md:bottom-10 md:left-2.5 text-white bg-blue-400 border-none rounded-full w-7 h-7 cursor-pointer text-2xl flex items-center justify-center
+            }
+        }
+    }
+}

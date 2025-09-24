@@ -1,0 +1,51 @@
+@reference "../../index.css";
+
+@layer components {
+    .post {
+        @apply p-2.5 md:py-5 md:px-10;
+
+        .container {
+            @apply p-5 rounded bg-bg shadow-xl;
+
+            .user {
+                @apply flex items-center justify-between;
+
+                .userInfo {
+                    @apply flex gap-5;
+
+                    & img {
+                        @apply w-10 h-10 rounded-full object-cover;
+                    }
+
+                    .details {
+                        @apply flex flex-col;
+
+                        .name {
+                            @apply font-medium;
+                        }
+
+                        .date {
+                            @apply text-xs text-text-soft;
+                        }
+                    }
+                }
+            }
+
+            .content{
+                @apply my-5;
+
+                & img {
+                    @apply w-full max-h-[30rem] object-cover mt-5;
+                }
+            }
+
+            .interactions {
+                @apply flex items-center gap-5;
+
+                .item {
+                    @apply flex items-center gap-1.5 cursor-pointer text-sm
+                }
+            }
+        }
+    }
+}

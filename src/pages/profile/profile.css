@@ -1,0 +1,61 @@
+@reference "../../index.css";
+
+@layer components {
+    .profile {
+        @apply bg-bg-soft text-text;
+
+        .images {
+            @apply w-full h-72 relative;
+
+            .cover {
+                @apply w-full h-72 object-cover
+            }
+
+            .profilePic {
+                @apply absolute w-44 h-44 rounded-full object-cover left-0 right-0 m-auto top-48
+            }
+        }
+
+        .profileContainer {
+            @apply p-2.5 md:py-5 md:px-10;
+
+            .userInfo {
+                @apply flex flex-col md:flex-row h-80 md:h-52 bg-bg rounded-xl shadow-xl text-text p-5 md:p-10 mt-24 md:mt-0 justify-between;
+
+                .left {
+                    @apply flex-1 flex gap-2.5 items-center text-text-soft justify-center;
+                }
+
+                .center {
+                    @apply flex-1 flex flex-col items-center gap-2.5 pt-10;
+
+                    & span {
+                        @apply font-medium text-3xl
+                    }
+
+                    .info {
+                        @apply w-full flex items-center justify-around;
+
+                        .item {
+                            @apply flex items-center gap-1 text-text-soft;
+
+                            & span {
+                                @apply text-sm font-normal;
+                            }
+                        }
+
+
+                    }
+
+                    & button {
+                        @apply bg-follow border-none rounded py-1 px-2 text-white cursor-pointer;
+                    }
+                }
+
+                .right {
+                    @apply flex-1 flex justify-end items-center gap-2.5;
+                }
+            }
+        }
+    }
+}

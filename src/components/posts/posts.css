@@ -1,0 +1,7 @@
+@reference "../../index.css";
+
+@layer components {
+    .posts {
+        @apply flex flex-col gap-12
+    }
+}

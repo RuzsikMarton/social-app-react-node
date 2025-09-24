@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+@theme {
+    --color-primary: rgb(96, 130, 182);
+
+    --bg-custom: linear-gradient(rgba(128, 128, 128, 0.5), rgb(96, 130, 182, 0.5)), url("/pexels-fauxels-3184435.jpg") center / cover no-repeat;
+}
+
+@layer components {
+    .login {
+        @apply h-full bg-primary min-h-screen flex justify-center items-center;
+
+        .card {
+            @apply flex flex-col w-full max-w-4xl rounded-xl bg-white min-h-[32rem] overflow-hidden md:flex-col lg:flex-row;
+
+            .left {
+                @apply flex-1 flex flex-col custom-bg p-13 gap-10 text-white;
+
+                & h1 {
+                    @apply text-6xl font-bold
+                }
+
+                & span {
+                    @apply text-xs
+                }
+
+                & button{
+                    @apply border-none w-1/2 p-2.5 bg-white text-primary font-bold cursor-pointer rounded-xs
+                }
+            }
+        }
+
+        .right {
+            @apply flex-1 flex flex-col p-13 gap-8 justify-center;
+
+            & h1 {
+                @apply text-[#555] text-3xl
+            }
+
+            & form {
+                @apply flex flex-col gap-8;
+
+                & input {
+                    @apply px-5 py-2.5 border-b border-gray-400; 
+                }
+
+                & button {
+                    @apply border-none rounded-xs w-1/2 p-2.5 bg-primary text-white font-bold cursor-pointer
+                } 
+            }
+        }
+    }
+}
+
+@utility custom-bg{
+    background: linear-gradient(rgba(128, 128, 128, 0.5), rgb(96, 130, 182, 0.5)), url("/pexels-fauxels-3184435.jpg") center / cover no-repeat;
+}

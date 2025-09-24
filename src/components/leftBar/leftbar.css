@@ -1,0 +1,56 @@
+@reference "../../index.css";
+
+@layer components{
+    .leftbar{
+         @apply hidden md:flex flex-2 sticky bg-bg top-12 h-[calc(100vh-3rem)] overflow-scroll hide-scrollbar text-text;
+
+        .container{
+            @apply p-5;
+
+            & hr {
+                @apply my-5 mx-0 border-none h-[0.5px] bg-border
+            }
+
+            & span {
+                @apply text-xs
+            }
+
+            .menu{
+                @apply flex flex-col gap-5;
+
+                .user{
+                    @apply flex items-center;
+
+                    & img {
+                        @apply w-7 h-7 rounded-full object-cover
+                    }
+
+                    & span {
+                        @apply pl-2.5 text-sm
+                    }
+                }
+
+                .item {
+                    @apply flex items-center gap-2.5;
+
+                    & img {
+                        @apply w-7 h-7
+                    }
+
+                    & span {
+                        @apply text-sm
+                    }
+                }
+            }
+        }
+    }
+}
+
+@utility hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

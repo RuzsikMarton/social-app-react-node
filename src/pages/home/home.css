@@ -1,0 +1,7 @@
+@reference "../../index.css";
+
+@layer components{
+    .home {
+        @apply bg-bg-soft text-text
+    }
+}
