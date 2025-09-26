@@ -1,6 +1,12 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import cors from 'cors'
+import authRoutes from  "./routes/auth.js"
+import userRoutes from  "./routes/users.js"
+import postRoutes from  "./routes/posts.js"
+import commentRoutes from  "./routes/comments.js"
+import likeRoutes from  "./routes/likes.js"
+
 
 dotenv.config();
 
@@ -11,9 +17,11 @@ const app = express();
 app.use(cors({ origin: "http://localhost:5173" }));
 app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+app.use("/api/auth",authRoutes );
+app.use("/api/users",userRoutes );
+app.use("/api/posts", postRoutes );
+app.use("/api/comments",commentRoutes );
+app.use("/api/likes",likeRoutes );
 
 app.use((err, req, res, next) => {
   console.error(err.stack)
