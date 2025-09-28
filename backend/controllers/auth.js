@@ -39,7 +39,7 @@ export const login = async (req, res) => {
     const ok = await bcrypt.compare(password || '', user[0].password);
     if (!ok) return AUTH_FAIL();
 
-    const token = jwt.sign({ id: user[0].id }, process.env.JWT_SECRET);
+    const token = jwt.sign({ id: user[0].id }, process.env.JWT_SECRET,{expiresIn: "7d"});
 
     const { password: _pw, ...safeUser } = user[0];
 

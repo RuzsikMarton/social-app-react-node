@@ -1,31 +1,25 @@
-import React from 'react'
-import Post from '../post/Post'
+import React from "react";
+import Post from "../post/Post";
+import { useAllPosts } from "../../hooks/usePosts";
 
 const Posts = () => {
-    const posts = [
-        {
-            id:1,
-            name: "Kill Bill",
-            userId: 1,
-            profilePic: "/profile.jpg",
-            desc: "This is the description of the first temporary post.",
-            img: "/post.jpg"
-        },{
-            id:2,
-            name: "Kill Bill",
-            userId: 1,
-            profilePic: "/profile.jpg",
-            desc: "This is the description of the second temporary post.",
-            img: "/post.jpg"
-        }
-    ]
+  const { data: posts = [], isLoading, error } = useAllPosts();
+  console.log(posts);
   return (
     <div className="flex flex-col gap-5">
-        {posts.map((post) => (
-            <Post post={post} key={post.id} />
-        ))}
+      {isLoading ? (
+        <div className="flex justify-center items-center">
+          <h1 className="text-4xl font-bold">Loading...</h1>
+        </div>
+      ) : error ? (
+        <div className="flex justify-center items-center">
+            <h1 className="text-4xl font-bold text-red-500">Something went wrong!</h1>
+        </div>
+      ) : (
+        posts?.map((post) => <Post post={post} key={post.id} />)
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default Posts
+export default Posts;

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./register.css";
 import { Link, useNavigate } from "react-router-dom";
-import { useRegister } from "../../hooks/useRegister";
+import { useRegister } from "../../hooks/authHooks";
 
 const Register = () => {
   const [inputs, setInputs] = useState({
