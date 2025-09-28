@@ -1,13 +1,30 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import "./login.css";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 
 const Login = () => {
-  const { login } = useContext(AuthContext);
-  const handleLogin = () => {
-    login();
-  }
+  const [inputs, setInputs] = useState({
+    username: "",
+    password: "",
+  });
+  const { login, authError, currentUser } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    login(inputs);
+  };
+
+  useEffect(() => {
+    if (currentUser) {
+      navigate("/", { replace: true });
+    }
+  }, [currentUser, navigate]);
   return (
     <div className="login">
       <div className="card">
@@ -25,8 +42,19 @@ const Login = () => {
         <div className="right">
           <h1>Login</h1>
           <form>
-            <input type="text" placeholder="Username"></input>
-            <input type="password" placeholder="Password"></input>
+            <input
+              type="text"
+              placeholder="Username"
+              name="username"
+              onChange={handleChange}
+            ></input>
+            <input
+              type="password"
+              placeholder="Password"
+              name="password"
+              onChange={handleChange}
+            ></input>
+            {authError ?? authError}
             <button onClick={handleLogin}>Login</button>
           </form>
         </div>
