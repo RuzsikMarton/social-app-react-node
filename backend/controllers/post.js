@@ -1,5 +1,6 @@
 import { pool } from "../connect.js";
 import jwt from "jsonwebtoken";
+import moment from "moment";
 
 export const getPost = async (req, res) => {
   const token = req.cookies.accessToken;
@@ -17,6 +18,31 @@ export const getPost = async (req, res) => {
     const [posts] = await pool.query(q, [decoded.id, decoded.id]);
     res.status(200).json(posts);
   } catch (err) {
+    return res.status(500).json("Internal server error");
+  }
+};
+
+export const addPost = async (req, res) => {
+  const token = req.cookies.accessToken;
+
+  if (!token) return res.status(401).json("Not logged in!");
+  let decoded;
+  try {
+    decoded = jwt.verify(token, process.env.JWT_SECRET);
+  } catch (err) {
+    return res.status(403).json("Token is not valid!");
+  }
+  const q = "INSERT INTO posts (`desc`,`img`,`createdAt`,`userId`) VALUES (?,?,?,?)";
+  try {
+    const [post] = await pool.query(q, [
+      req.body.desc,
+      req.body.img,
+      moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
+      decoded.id,
+    ]);
+    res.status(200).json("Post has been created");
+  } catch (err) {
+    console.error(err);
     return res.status(500).json("Internal server error");
   }
 };

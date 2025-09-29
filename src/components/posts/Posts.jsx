@@ -4,7 +4,6 @@ import { useAllPosts } from "../../hooks/usePosts";
 
 const Posts = () => {
   const { data: posts = [], isLoading, error } = useAllPosts();
-  console.log(posts);
   return (
     <div className="flex flex-col gap-5">
       {isLoading ? (

@@ -6,7 +6,7 @@ import { AuthContext } from '../../context/AuthContext.jsx'
 
 const Stories = () => {
 
-    const {currentUser} = useContext(AuthContext)
+  const {currentUser} = useContext(AuthContext)
   const stories = [
     {
       id: 1,

@@ -7,6 +7,7 @@ import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import { Link } from "react-router-dom";
 import "./post.css";
 import Comments from "../comment/Comments";
+import moment from 'moment'
 
 const Post = ({ post }) => {
   const [commentOpen, setCommentOpen] = useState(false)
@@ -24,14 +25,14 @@ const Post = ({ post }) => {
               <Link to={`/profile/${post.userId}`} style={{ color: "inherit" }}>
                 <span className="name">{post.name}</span>
               </Link>
-              <span className="date">1 min ago</span>
+              <span className="date">{moment(post.createdAt).fromNow()}</span>
             </div>
           </div>
           <MoreHorizOutlinedIcon />
         </div>
         <div className="content">
             <p>{post.desc}</p>
-            <img src={post.img} />
+            <img src={"/upload/"+post.img} alt="" />
         </div>
         <div className="interactions">
             <div className="item">

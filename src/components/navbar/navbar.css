@@ -12,10 +12,10 @@
             } 
 
             .search {
-                @apply flex items-center gap-2.5 border border-border rounded-xl p-1;
+                @apply flex items-center gap-2.5 border border-border rounded-xl p-1; 
 
                 & input{
-                    @apply hidden md:block border-none w-36 md:w-60 lg:w-96 bg-transparent
+                    @apply hidden md:block border-none w-36 md:w-60 lg:w-96 bg-transparent focus:outline-none;
                 }
             }
         }

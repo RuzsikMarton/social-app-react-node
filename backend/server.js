@@ -6,7 +6,9 @@ import userRoutes from "./routes/users.js";
 import postRoutes from "./routes/posts.js";
 import commentRoutes from "./routes/comments.js";
 import likeRoutes from "./routes/likes.js";
+import uploadRoutes from "./routes/upload.js"
 import cookieParser from "cookie-parser";
+import { upload } from "./controllers/upload.js";
 
 dotenv.config();
 
@@ -27,6 +29,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/posts", postRoutes);
 app.use("/api/comments", commentRoutes);
 app.use("/api/likes", likeRoutes);
+app.use("/api/upload", uploadRoutes);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
