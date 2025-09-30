@@ -1,44 +1,39 @@
-import { useContext } from "react";
-import "./comments.css"
-import {AuthContext} from "../../context/AuthContext.jsx"
+import { useContext, useState } from "react";
+import "./comments.css";
+import { AuthContext } from "../../context/AuthContext.jsx";
+import { useAddComment, useGetComments } from "../../hooks/useComments.js";
+import moment from "moment";
 
-const Comments = () => {
+const Comments = ({postId} ) => {
+  const [desc, setDesc] = useState("");
+  const { currentUser } = useContext(AuthContext);
+  const { data = [], isLoading, error} = useGetComments(postId);
+  const { mutate } = useAddComment();
 
-    const {currentUser} = useContext(AuthContext)
+  const handleClick = (e) => {
+      e.preventDefault();
+      mutate({ desc, postId });
+    };
 
-  const comments = [
-    {
-      id: 1,
-      desc: "This is the first comment to a post.",
-      name: "Kill Bill",
-      userId: 1,
-      profilePic: "/profile.jpg",
-    },
-    {
-      id: 2,
-      desc: "This is the second comment to a post.",
-      name: "Kill Bill",
-      userId: 1,
-      profilePic: "/profile.jpg",
-    },
-  ];
   return (
     <div className="comments">
-        <div className="write">
-            <img src={currentUser.profilePic} alt="" />
-            <input type="text" placeholder="Write a comment" />
-            <button>Send</button>
-        </div>
-      {comments.map((comment) => (
-        <div className="comment">
-          <img src={comment.profilePic} alt="" />
-          <div className="info">
-            <span>{comment.name}</span>
-            <p>{comment.desc}</p>
-          </div>
-          <span className="date">1 hour ago</span>
-        </div>
-      ))}
+      <div className="write">
+        <img src={currentUser?.profilePic} alt="" />
+        <input type="text" placeholder="Write a comment" value={desc} onChange={(e) => setDesc(e.target.value)} />
+        <button onClick={handleClick}>Send</button>
+      </div>
+      {isLoading ? "Loading..." : data.map((comment) => (
+            <div className="comment">
+              <img src={comment.profilePic} alt="" />
+              <div className="info">
+                <span>{comment.name}</span>
+                <p>{comment.desc}</p>
+              </div>
+              <span className="date">
+                {moment(comment.createdAt).fromNow()}
+              </span>
+            </div>
+          ))}
     </div>
   );
 };
