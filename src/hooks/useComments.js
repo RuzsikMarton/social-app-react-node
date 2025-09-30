@@ -1,15 +1,11 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { addComment, getComments } from "../api/comments"
 
-export const useGetComments = (payload) => {
+export const useGetComments = (postId) => {
   return useQuery({
-    queryKey: ["comments"],
-    queryFn: async () => {
-      const data = await getComments(payload);
-      console.log(data);
-      return data;
-    },
-    enabled: !!payload,
+    queryKey: ["comments", postId],
+    queryFn:  () => getComments(postId),
+    enabled: !!postId,
   });
 };
 

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
@@ -8,12 +8,20 @@ import { Link } from "react-router-dom";
 import "./post.css";
 import Comments from "../comment/Comments";
 import moment from 'moment'
+import { useGetLikes } from "../../hooks/useLikes";
+import { useGetComments } from "../../hooks/useComments";
+import { AuthContext } from "../../context/AuthContext";
 
 const Post = ({ post }) => {
   const [commentOpen, setCommentOpen] = useState(false)
 
-    //Temp
-    const liked = true;
+  const {currentUser} = useContext(AuthContext);
+  const { data: likes = [], isLoading: loadingLike, error: errLike} = useGetLikes(post.id);
+  const { data: comments = [], isLoading: loadingComment, error: errComment} = useGetComments(post.id);
+
+  const handleLike = () => {
+    
+  }
 
   return (
     <div className="post">
@@ -35,13 +43,13 @@ const Post = ({ post }) => {
             <img src={"/upload/"+post.img} alt="" />
         </div>
         <div className="interactions">
-            <div className="item">
-                {liked ? <FavoriteOutlinedIcon className="text-red-500" /> : <FavoriteBorderOutlinedIcon />}
-                12 Likes
+            <div className="item" onClick={handleLike}>
+                {likes.includes(currentUser.id) ? <FavoriteOutlinedIcon className="text-red-500" /> : <FavoriteBorderOutlinedIcon />}
+                {likes.length} Likes
             </div>
             <div className="item" onClick={() => setCommentOpen(!commentOpen)}>
                 <TextsmsOutlinedIcon />
-                Comment
+                {comments.length} Comments
             </div>
             <div className="item">
                 <ShareOutlinedIcon />
