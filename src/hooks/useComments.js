@@ -14,7 +14,7 @@ export const useAddComment = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (payload) => addComment(payload),
+    mutationFn: (postId) => addComment(postId),
 
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["comments"] });

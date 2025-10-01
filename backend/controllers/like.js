@@ -41,9 +41,9 @@ export const deleteLike = async (req, res) => {
   } catch (err) {
     return res.status(403).json("Token is not valid!");
   }
-  const q = "DELETE FROM likes `userId` = ? AND `postId` = ?";
+  const q = "DELETE FROM likes WHERE `userId` = ? AND `postId` = ?";
   try {
-    await pool.query(q, [decoded.id, req.body.postId]);
+    await pool.query(q, [decoded.id, req.query.postId]);
     res.status(200).json("Like has been removed");
   } catch (err) {
     console.error(err);

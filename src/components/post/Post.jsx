@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import "./post.css";
 import Comments from "../comment/Comments";
 import moment from 'moment'
-import { useGetLikes } from "../../hooks/useLikes";
+import { useGetLikes, useLike } from "../../hooks/useLikes";
 import { useGetComments } from "../../hooks/useComments";
 import { AuthContext } from "../../context/AuthContext";
 
@@ -18,9 +18,10 @@ const Post = ({ post }) => {
   const {currentUser} = useContext(AuthContext);
   const { data: likes = [], isLoading: loadingLike, error: errLike} = useGetLikes(post.id);
   const { data: comments = [], isLoading: loadingComment, error: errComment} = useGetComments(post.id);
+  const { mutate } = useLike();
 
   const handleLike = () => {
-    
+    mutate([post.id, likes.includes(currentUser.id)])
   }
 
   return (
