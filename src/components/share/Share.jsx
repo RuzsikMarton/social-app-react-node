@@ -23,7 +23,7 @@ const Share = () => {
         <div className="flex item-center justify-between">
           <div className="flex items-center flex-3">
             <img
-              src={currentUser.profilePic ? currentUser.profilePic : "/nopPic.webp"}
+              src={currentUser.profilePic ? "/upload/"+currentUser.profilePic : "/upload/nopPic.webp"}
               alt=""
               className="w-10 h-10 rounded-full object-cover"
             />

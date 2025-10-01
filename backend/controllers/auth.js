@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 export const register = async (req, res) => {
+  const defaultAvatar = "../public/noPic.webp"
   const { username, email, password, name } = req.body;
   try {
     const select = "SELECT * FROM users WHERE username = ?";
@@ -14,8 +15,8 @@ export const register = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, salt);
 
     const insert =
-      "INSERT INTO users (`username`,`email`,`password`,`name`) VALUES (?)";
-    await pool.query(insert, [[username, email, hashedPassword, name]]);
+      "INSERT INTO users (`username`,`email`,`password`,`name`, profilePic`) VALUES (?)";
+    await pool.query(insert, [[username, email, hashedPassword, name, defaultAvatar]]);
 
     return res.status(201).json("User has been created");
   } catch (err) {

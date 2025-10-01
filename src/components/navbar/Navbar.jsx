@@ -12,8 +12,8 @@ import { DarkModeContext } from "../../context/darkModeContext";
 import { AuthContext } from "../../context/AuthContext";
 
 const Navbar = () => {
-  const {toggle} = useContext(DarkModeContext);
-  const {currentUser} = useContext(AuthContext);
+  const { toggle } = useContext(DarkModeContext);
+  const { currentUser } = useContext(AuthContext);
   return (
     <div className="navbar">
       <div className="left">
@@ -21,10 +21,7 @@ const Navbar = () => {
           <span>SocialApp</span>
         </Link>
         <HomeOutlinedIcon />
-        <DarkModeOutlinedIcon
-          onClick={toggle}
-          style={{ cursor: "pointer" }}
-        />
+        <DarkModeOutlinedIcon onClick={toggle} style={{ cursor: "pointer" }} />
         <GridViewOutlinedIcon />
         <div className="search">
           <SearchIcon />
@@ -36,8 +33,15 @@ const Navbar = () => {
         <EmailOutlinedIcon />
         <NotificationsNoneOutlinedIcon />
         <div className="user">
-          <img src={currentUser.profilePic ? currentUser.profilePic : "/nopPic.webp"} alt="" />
-          <span>{currentUser.name}</span>
+          <img
+            src={
+              currentUser.profilePic ? "/upload/"+currentUser.profilePic : "/upload/nopPic.webp"
+            }
+            alt=""
+          />
+          <Link to={`/profile/${currentUser.id}`} style={{ color: "inherit" }}>
+            <span>{currentUser.name}</span>
+          </Link>
         </div>
       </div>
     </div>
