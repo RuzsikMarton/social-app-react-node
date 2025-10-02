@@ -4,6 +4,7 @@ import moment from "moment";
 
 export const getPost = async (req, res) => {
   const token = req.cookies.accessToken;
+  const userId = req.query.userId;
 
   if (!token) return res.status(401).json("Not logged in!");
   let decoded;
@@ -12,10 +13,14 @@ export const getPost = async (req, res) => {
   } catch (err) {
     return res.status(403).json("Token is not valid!");
   }
-  const q = `SELECT p.*, u.id AS userId, name, profilePic FROM posts AS p JOIN users AS u ON (u.id = p.userId) 
+  const q = userId
+    ? `SELECT p.*, u.id AS userId, name, profilePic FROM posts AS p JOIN users AS u ON (u.id = p.userId) WHERE p.userId = ? ORDER BY p.createdAt DESC`
+    : `SELECT p.*, u.id AS userId, name, profilePic FROM posts AS p JOIN users AS u ON (u.id = p.userId) 
   LEFT JOIN relationships AS r ON (p.userId = r.followedUserId) WHERE r.followerUserId = ? OR p.userId = ? ORDER BY p.createdAt DESC`;
+  
   try {
-    const [posts] = await pool.query(q, [decoded.id, decoded.id]);
+    const values = userId ? [userId] : [decoded.id, decoded.id];
+    const [posts] = await pool.query(q, values);
     res.status(200).json(posts);
   } catch (err) {
     return res.status(500).json("Internal server error");
@@ -32,7 +37,8 @@ export const addPost = async (req, res) => {
   } catch (err) {
     return res.status(403).json("Token is not valid!");
   }
-  const q = "INSERT INTO posts (`desc`,`img`,`createdAt`,`userId`) VALUES (?,?,?,?)";
+  const q =
+    "INSERT INTO posts (`desc`,`img`,`createdAt`,`userId`) VALUES (?,?,?,?)";
   try {
     const [post] = await pool.query(q, [
       req.body.desc,

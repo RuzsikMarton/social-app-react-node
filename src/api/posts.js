@@ -1,7 +1,8 @@
 import {api} from './client'
 
-export const getAllPosts = async () => {
-    const {data} = await api.get('/posts');
+export const getAllPosts = async (userId) => {
+    const url = userId ? `/posts?userId=${userId}` : '/posts';
+    const {data} = await api.get(url);
     return data;
 }
 

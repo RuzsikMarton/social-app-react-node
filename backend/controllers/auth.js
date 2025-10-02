@@ -45,7 +45,11 @@ export const login = async (req, res) => {
     const { password: _pw, ...safeUser } = user[0];
 
     res
-      .cookie("accessToken", token, { httpOnly: true })
+      .cookie("accessToken", token, { 
+        httpOnly: true,
+        sameSite: 'lax',
+        maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+      })
       .status(200)
       .json(safeUser);
   } catch (err) {
@@ -57,8 +61,8 @@ export const login = async (req, res) => {
 export const logout = (req, res) => {
   res
     .clearCookie("accessToken", {
-      secure: true,
-      sameSite: "none",
+      httpOnly: true,
+      sameSite: 'lax'
     })
     .status(200)
     .json("User has been logged out");

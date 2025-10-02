@@ -2,8 +2,8 @@ import React from "react";
 import Post from "../post/Post";
 import { useAllPosts } from "../../hooks/usePosts";
 
-const Posts = () => {
-  const { data: posts = [], isLoading, error } = useAllPosts();
+const Posts = ({userId}) => {
+  const { data: posts = [], isLoading, error } = useAllPosts(userId);
   return (
     <div className="flex flex-col gap-5">
       {isLoading ? (

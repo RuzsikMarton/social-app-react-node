@@ -1,6 +1,7 @@
-import React, { useContext } from "react";
+import { useContext, useState } from "react";
 import "./profile.css";
 import Posts from "../../components/posts/Posts.jsx";
+import Update from "../../components/update/update.jsx";
 import { AuthContext } from "../../context/AuthContext.jsx";
 import FacebookRoundedIcon from "@mui/icons-material/FacebookRounded";
 import InstagramIcon from "@mui/icons-material/Instagram";
@@ -13,11 +14,25 @@ import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useLocation } from "react-router-dom";
 import { useProfileInfo } from "../../hooks/useProfile.js";
+import { useGetRelationship, useFollow } from "../../hooks/useRelationship.js";
 
 const Profile = () => {
-  const {currentUser} = useContext(AuthContext)
+  const [openUpdate, setOpenUpdate] = useState(false);
+  const { currentUser } = useContext(AuthContext);
   const userId = parseInt(useLocation().pathname.split("/")[2]);
   const { data: user = [], isLoading, error } = useProfileInfo(userId);
+  const {
+    data: relationshipData = [],
+    isLoading: rIsLoading,
+    isError: rIsError,
+  } = useGetRelationship(userId);
+  const userO = user[0]
+
+  const { mutate } = useFollow();
+
+  const handleFollow = () => {
+    mutate([userId, relationshipData.includes(currentUser.id)]);
+  };
 
   return (
     <div className="profile">
@@ -33,7 +48,7 @@ const Profile = () => {
             />
             <img
               src={
-                user.profilePic
+                user[0].profilePic
                   ? "/upload/" + user[0].profilePic
                   : "/upload/nopPic.webp"
               }
@@ -72,7 +87,17 @@ const Profile = () => {
                     <span>{user[0].language}</span>
                   </div>
                 </div>
-                {userId === currentUser.id ? (<button>Update</button>) : (<button>Follow</button>)}
+                {rIsLoading ? (
+                  "Loading..."
+                ) : userId === currentUser.id ? (
+                  <button onClick={() => setOpenUpdate(true)}>Update</button>
+                ) : (
+                  <button onClick={handleFollow}>
+                    {relationshipData.includes(currentUser.id)
+                      ? "Following"
+                      : "Follow"}
+                  </button>
+                )}
               </div>
               <div className="right">
                 <EmailOutlinedIcon />
@@ -80,9 +105,10 @@ const Profile = () => {
               </div>
             </div>
           </div>
-          <Posts />
+          <Posts userId={userId} />
         </>
       )}
+      {openUpdate && <Update setOpenUpdate={setOpenUpdate} user={userO} />}
     </div>
   );
 };

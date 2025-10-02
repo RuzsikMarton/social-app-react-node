@@ -1,10 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { addPost, getAllPosts } from "../api/posts";
 
-export const useAllPosts = () =>
+export const useAllPosts = (userId) =>
   useQuery({
-    queryKey: ["posts"],
-    queryFn: getAllPosts,
+    queryKey: ["posts", userId],
+    queryFn: () => getAllPosts(userId),
   });
 
 export const useCreatePost = () => {
