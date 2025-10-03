@@ -10,3 +10,8 @@ export const addPost = async (payload) => {
     const res = await api.post('/posts', payload);
     return res;
 }
+
+export const deletePost = async (postId) => {
+    const res = await api.delete('/posts/' + postId);
+    return res;
+}
